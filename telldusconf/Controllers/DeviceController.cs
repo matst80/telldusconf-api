@@ -9,7 +9,7 @@ namespace telldusconf.Controllers
     [Route("api/Device")]
     public class DeviceController : Controller
     {
-        [HttpGet("{Name}")]
+        [HttpGet]
         public IActionResult GetAllDevices()
         {
             var c = GetConfig();

@@ -8,10 +8,7 @@ namespace telldusconf
     {
         public static void Main(string[] args)
         {
-            var p = new Parser("./telldus.conf");
-            var w = new ConfigWriter("./copy.conf");
-            var config = p.Parse();
-            w.Write(config);
+           
             BuildWebHost(args).Run();
         }
 
