@@ -3,8 +3,12 @@ namespace telldusconf.Parsing
 {
     public class Parser
     {
-        public Parser()
+        private string _filePath;
+
+        public Parser(string filename)
         {
+            _filePath = filename;
+
         }
     }
 }
