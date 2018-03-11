@@ -42,7 +42,7 @@ namespace telldusconf.Parsing
             while (ok)
             {
                 var line = reader.ReadLine();
-                if (line.Contains('}') || reader.EndOfStream)
+                if (line == null || line.Contains('}') || reader.EndOfStream)
                 {
                     ok = false;
                 }

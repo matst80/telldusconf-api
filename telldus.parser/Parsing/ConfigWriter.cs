@@ -23,9 +23,13 @@ namespace telldus.parser.Parsing
             foreach (var kv in keyDict)
             {
                 var toWrite = kv.Value.GetValue(data);
-                if (toWrite is string || toWrite is int)
+                if (toWrite is string)
                 {
                     writer.Write($"{prefix}{kv.Key} = \"{toWrite}\"{Environment.NewLine}");
+                }
+                else if (toWrite is int)
+                {
+                    writer.Write($"{prefix}{kv.Key} = {toWrite}{Environment.NewLine}");
                 }
                 else if (toWrite is IList lst)
                 {

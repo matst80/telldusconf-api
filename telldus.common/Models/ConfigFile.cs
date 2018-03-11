@@ -11,6 +11,9 @@ namespace telldusconf.Models
         [ListKey("device")]
         public List<Device> Devices { get; set; }
 
+        [Key("controller")]
+        public TelldusController Controller { get; set; }
+
         public ConfigFile()
         {
         }
