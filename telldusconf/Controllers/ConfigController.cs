@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using telldusconf.Models;
 using telldusconf.Parsing;
 
@@ -13,6 +14,7 @@ namespace telldusconf.Controllers
     [Route("api/Config")]
     public class ConfigController : Controller
     {
+        [SwaggerOperation("GetConfig")]
         [HttpGet]
         public IActionResult GetConfig()
         {
@@ -31,15 +33,18 @@ namespace telldusconf.Controllers
             var p = new ConfigWriter("./telldus-new.conf");
             p.Write(c);
         }
-        
-        [HttpPost]
-        public IActionResult AddDevice([FromBody] ConfigFile config)
-        {
-            if(config != null)
 
-            StoreConfig(config);
-            return Ok(string.Format("Config for user {0} added", config.User));
+        [SwaggerOperation("StoreConfig")]
+        [HttpPost]
+        public IActionResult StoreConfigFunc([FromBody] ConfigFile config)
+        {
+            if (config != null)
+            {
+                StoreConfig(config);
+
+                return Ok(string.Format("Config for user {0} added", config.User));
+            }
+            return NotFound();
         }
-        
     }
 }
