@@ -17,7 +17,6 @@ namespace telldusconf.Controllers
         public IActionResult GetConfig()
         {
             var c = ParseConfig();
-
             return Ok(c);
         }
 
@@ -37,15 +36,8 @@ namespace telldusconf.Controllers
         public IActionResult AddDevice([FromBody] ConfigFile config)
         {
             StoreConfig(config);
-
             return Ok(string.Format("Config for user {0} added", config.User));
-
         }
-
-        //Replace with string extension
-        private bool IsNotNullOrEmpty(string str)
-        {
-            return !string.IsNullOrEmpty(str);
-        }
+        
     }
 }
