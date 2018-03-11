@@ -37,16 +37,7 @@ namespace telldusconf.Parsing
 
             //var type = typeof(T);
             var ret = Activator.CreateInstance(type);
-            var prps = type.GetProperties();
-            var keyDict = new Dictionary<string, PropertyInfo>();
-            foreach (var prp in prps)
-            {
-                var key = prp.GetCustomAttributes(true).OfType<KeyAttribute>().FirstOrDefault();
-                if (key != null)
-                {
-                    keyDict.Add(key.Key, prp);
-                }
-            }
+            var keyDict = GetProperties(type.GetProperties());
             bool ok = true;
             while (ok)
             {
@@ -79,6 +70,21 @@ namespace telldusconf.Parsing
                 }
             }
             return ret;
+        }
+
+        internal static Dictionary<string, PropertyInfo> GetProperties(PropertyInfo[] prps)
+        {
+            var keyDict = new Dictionary<string, PropertyInfo>();
+            foreach (var prp in prps)
+            {
+                var key = prp.GetCustomAttributes(true).OfType<KeyAttribute>().FirstOrDefault();
+                if (key != null)
+                {
+                    keyDict.Add(key.Key, prp);
+                }
+            }
+
+            return keyDict;
         }
 
         private void PopulateValue<T>(T ret, PropertyInfo prp, StreamReader reader, string val = "")
