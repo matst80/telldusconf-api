@@ -42,6 +42,16 @@ namespace telldusconf.Parsing
                     keyDict.Add(key.Key, prp);
                 }
             }
+            bool ok = true;
+            while (ok)
+            {
+                var line = reader.ReadLine();
+                if (line.Contains("=")) {
+                    var kv = line.Split('=').Select(d=>d.Trim()).ToArray();
+                    var key = kv[0];
+                    var value = kv[1];
+                }
+            }
             return ret;
         }
     }
