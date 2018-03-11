@@ -3,42 +3,49 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using telldusconf.Models;
+using telldusconf.Parsing;
 
 namespace telldusconf.Controllers
 {
-    [Route("api/[controller]")]
-    public class ValuesController : Controller
+
+    [Produces("application/json")]
+    [Route("api/Config")]
+    public class ConfigController : Controller
     {
-        // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult GetConfig()
         {
-            return new string[] { "value1", "value2" };
+            var c = ParseConfig();
+
+            return Ok(c);
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        private static ConfigFile ParseConfig()
         {
-            return "value";
+            var p = new Parser("./telldus.conf");
+            return p.Parse();
         }
 
-        // POST api/values
+        private static void StoreConfig(ConfigFile c)
+        {
+            var p = new ConfigWriter("./telldus-new.conf");
+            p.Write(c);
+        }
+        
         [HttpPost]
-        public void Post([FromBody]string value)
+        public IActionResult AddDevice([FromBody] ConfigFile config)
         {
+            StoreConfig(config);
+
+            return Ok(string.Format("Config for user {0} added", config.User));
+
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        //Replace with string extension
+        private bool IsNotNullOrEmpty(string str)
         {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            return !string.IsNullOrEmpty(str);
         }
     }
 }

@@ -14,16 +14,14 @@ namespace telldusconf.Controllers
     [Route("api/Device")]
     public class DeviceController : Controller
     {
-        [HttpGet("{Name}")]
+        [HttpGet]
         public IActionResult GetAllDevices()
         {
             var c = GetConfig();
 
             return Ok(c.Devices);
         }
-
         
-
         private static ConfigFile GetConfig()
         {
             var p = new Parser("./telldus.conf");
@@ -35,7 +33,6 @@ namespace telldusconf.Controllers
             var p = new ConfigWriter("./telldus-new.conf");
             p.Write(c);
         }
-
 
         [HttpGet("{Name}")]
         public IActionResult GetDeviceByName(string Name)
@@ -88,7 +85,6 @@ namespace telldusconf.Controllers
                 }
 
                 c.Devices.Add(device);
-
                 
             }
 
