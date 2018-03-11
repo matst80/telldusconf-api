@@ -5,7 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
     <Folder Include="Parsing\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\telldus.common\telldus.common.csproj" />
   </ItemGroup>
 </Project>

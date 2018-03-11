@@ -16,7 +16,8 @@ namespace telldusconf.Parsing
             _filePath = filename;
         }
 
-        public ConfigFile Parse() {
+        public ConfigFile Parse()
+        {
             var fileStream = new FileStream(_filePath, FileMode.Open);
             return Parse(fileStream);
         }
@@ -100,7 +101,10 @@ namespace telldusconf.Parsing
                         lst.Add(newRow);
                     }
                 }
-                prp.SetValue(obj, obj);
+                else {
+                    obj = ParseObject(prp.PropertyType, reader);
+                }
+                prp.SetValue(ret, obj);
             }
         }
     }
