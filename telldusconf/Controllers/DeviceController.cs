@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using telldusconf.Models;
 using telldusconf.Parsing;
 
@@ -22,8 +17,6 @@ namespace telldusconf.Controllers
             return Ok(c.Devices);
         }
 
-        
-
         private static ConfigFile GetConfig()
         {
             var p = new Parser("./telldus.conf");
@@ -36,7 +29,6 @@ namespace telldusconf.Controllers
             p.Write(c);
         }
 
-
         [HttpGet("{Name}")]
         public IActionResult GetDeviceByName(string Name)
         {
@@ -44,7 +36,7 @@ namespace telldusconf.Controllers
 
             var devices = c.Devices.Where(d => d.Name == Name);
 
-            if(devices.Count() > 0)
+            if (devices.Count() > 0)
             {
                 return Ok(devices);
             }
@@ -70,30 +62,28 @@ namespace telldusconf.Controllers
         [HttpPost]
         public IActionResult AddDevice([FromBody] Device device)
         {
-            if(device != null &&
+            if (device != null &&
                 IsNotNullOrEmpty(device.Name) &&
                 IsNotNullOrEmpty(device.Protocol) &&
                 IsNotNullOrEmpty(device.Model))
             {
                 var c = GetConfig();
 
-                if(c.Devices.Any(d => d.Id == device.Id))
+                if (c.Devices.Any(d => d.Id == device.Id))
                 {
                     return BadRequest("Id already exists");
 
                 }
-                if(c.Devices.Any(d => d.Name == device.Name))
+                if (c.Devices.Any(d => d.Name == device.Name))
                 {
                     return BadRequest("Name already exists");
                 }
 
                 c.Devices.Add(device);
-
-                
             }
 
             return Ok(string.Format("Device {0} added", device.Name));
-            
+
         }
 
 
