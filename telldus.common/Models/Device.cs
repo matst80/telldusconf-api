@@ -7,15 +7,18 @@ namespace telldusconf.Models
 {
     public class Device
     {
-
-        int Id { get; set; }
-        string Name { get; set; }
-        int Controller { get; set; }
-        string Protocol { get; set; }
-
-        string Model { get; set; }
-        [ObjectKey("parameters")]
-        DeviceParameter Parameters { get; set; }
+        [Key("id")]
+        public int Id { get; set; }
+        [Key("name")]
+        public string Name { get; set; }
+        [Key("controller")]
+        public int Controller { get; set; }
+        [Key("protocol")]
+        public string Protocol { get; set; }
+        [Key("model")]
+        public string Model { get; set; }
+        [Key("parameters")]
+        public DeviceParameter Parameters { get; set; }
 
     }
 }
