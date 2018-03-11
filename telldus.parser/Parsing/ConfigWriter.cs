@@ -3,20 +3,26 @@ using System.Collections;
 using System.IO;
 using telldusconf.Parsing;
 
-namespace telldus.parser.Parsing
+namespace telldusconf.Parsing
 {
-    public static class ConfigWriter
+    public class ConfigWriter
     {
-        public static void Write(object data, string filename)
+        private string _filename;
+
+        public ConfigWriter(string filename) {
+            _filename = filename;
+        }
+
+        public void Write(object data)
         {
-            using (var logWriter = File.CreateText(filename))
+            using (var logWriter = File.CreateText(_filename))
             {
                 Write(data, logWriter);
                 logWriter.Flush();
             }
         }
 
-        public static void Write(object data, StreamWriter writer, string prefix = "")
+        public void Write(object data, StreamWriter writer, string prefix = "")
         {
             var type = data.GetType();
             var keyDict = Parser.GetProperties(type.GetProperties());

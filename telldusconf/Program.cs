@@ -16,8 +16,9 @@ namespace telldusconf
         public static void Main(string[] args)
         {
             var p = new Parser("./telldus.conf");
+            var w = new ConfigWriter("./copy.conf");
             var config = p.Parse();
-            telldus.parser.Parsing.ConfigWriter.Write(config, "./copy.conf");
+            w.Write(config);
             BuildWebHost(args).Run();
         }
 
