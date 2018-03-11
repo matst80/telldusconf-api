@@ -10,5 +10,10 @@ namespace telldusconf.Parsing
             _filePath = filename;
 
         }
+
+        public ConfigFile Parse(StreamReader reader)
+        {
+
+        }
     }
 }

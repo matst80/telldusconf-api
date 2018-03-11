@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "telldusconf", "telldusconf\telldusconf.csproj", "{C7EA9686-052C-4BBF-9172-2F126CE68AA4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "telldus.parser", "telldus.parser\telldus.parser.csproj", "{26B27732-A94D-4953-9FBB-E62D5004BB21}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,5 +15,9 @@ Global
 		{C7EA9686-052C-4BBF-9172-2F126CE68AA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7EA9686-052C-4BBF-9172-2F126CE68AA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7EA9686-052C-4BBF-9172-2F126CE68AA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26B27732-A94D-4953-9FBB-E62D5004BB21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26B27732-A94D-4953-9FBB-E62D5004BB21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26B27732-A94D-4953-9FBB-E62D5004BB21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26B27732-A94D-4953-9FBB-E62D5004BB21}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
