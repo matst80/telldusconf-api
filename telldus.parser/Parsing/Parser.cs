@@ -70,7 +70,7 @@ namespace telldusconf.Parsing
                 }
                 else if (line.Contains('{'))
                 {
-                    var key = line.Split(' ').FirstOrDefault().Trim();
+                    var key = line.Trim().Split(' ').FirstOrDefault().Trim();
                     if (keyDict.ContainsKey(key))
                     {
                         var prp = keyDict[key];
