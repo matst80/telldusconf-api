@@ -14,6 +14,7 @@ namespace telldusconf.Models
         string Protocol { get; set; }
 
         string Model { get; set; }
+        [ObjectKey("parameters")]
         DeviceParameter Parameters { get; set; }
 
     }
