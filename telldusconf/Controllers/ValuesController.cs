@@ -35,6 +35,8 @@ namespace telldusconf.Controllers
         [HttpPost]
         public IActionResult AddDevice([FromBody] ConfigFile config)
         {
+            if(config != null)
+
             StoreConfig(config);
             return Ok(string.Format("Config for user {0} added", config.User));
         }
