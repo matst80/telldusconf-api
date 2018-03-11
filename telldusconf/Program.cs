@@ -7,6 +7,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using telldusconf.Parsing;
 
 namespace telldusconf
 {
@@ -14,6 +15,8 @@ namespace telldusconf
     {
         public static void Main(string[] args)
         {
+            var p = new Parser("./telldus.conf");
+            var config = p.Parse();
             BuildWebHost(args).Run();
         }
 
