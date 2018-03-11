@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -14,10 +15,23 @@ namespace telldusconf.Controllers
     public class ConfigController : Controller
     {
         [HttpGet]
-        public IActionResult GetConfig()
+        public ConfigFile GetConfig()
         {
             var c = ParseConfig();
-            return Ok(c);
+            return c;
+        }
+
+        [Produces("text/html")]
+        [HttpGet("Raw")]
+        public string GetConfigFile()
+        {
+            var fileStream = new FileStream("./telldus-new.conf", FileMode.Open);
+            var reader = new StreamReader(fileStream);
+
+            var data = reader.ReadToEnd();
+
+            fileStream.Close();
+            return data;
         }
 
         private static ConfigFile ParseConfig()
