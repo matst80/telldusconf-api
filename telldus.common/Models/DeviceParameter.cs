@@ -2,8 +2,13 @@
 {
     public class DeviceParameter
     {
-        string Code { get; set; }
-        string House { get; set; }
-        string Unit { get; set; }
+        [Key("code")]
+        public string Code { get; set; }
+
+        [Key("house")]
+        public string House { get; set; }
+
+        [Key("unit")]
+        public string Unit { get; set; }
     }
 }

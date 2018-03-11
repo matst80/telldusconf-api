@@ -85,7 +85,10 @@ namespace telldusconf.Parsing
         {
             if (prp.PropertyType == typeof(string))
             {
-                prp.SetValue(ret, val.Trim().Replace("\"",""));
+                if (!string.IsNullOrEmpty(val))
+                {
+                    prp.SetValue(ret, val.Trim().Replace("\"", ""));
+                }
             }
             else if (prp.PropertyType == typeof(int))
             {
