@@ -11,5 +11,6 @@ namespace telldusconf.Controllers
     [Route("api/Device")]
     public class DeviceController : Controller
     {
+
     }
 }

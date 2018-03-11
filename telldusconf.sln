@@ -1,9 +1,12 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "telldusconf", "telldusconf\telldusconf.csproj", "{C7EA9686-052C-4BBF-9172-2F126CE68AA4}"
+# Visual Studio 15
+VisualStudioVersion = 15.0.27323.2
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "telldusconf", "telldusconf\telldusconf.csproj", "{C7EA9686-052C-4BBF-9172-2F126CE68AA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "telldus.parser", "telldus.parser\telldus.parser.csproj", "{26B27732-A94D-4953-9FBB-E62D5004BB21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "telldus.parser", "telldus.parser\telldus.parser.csproj", "{26B27732-A94D-4953-9FBB-E62D5004BB21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "telldus.common", "telldus.common\telldus.common.csproj", "{AA04B6C5-156C-4169-9166-89D0B3CBFC5E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,5 +22,15 @@ Global
 		{26B27732-A94D-4953-9FBB-E62D5004BB21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26B27732-A94D-4953-9FBB-E62D5004BB21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26B27732-A94D-4953-9FBB-E62D5004BB21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA04B6C5-156C-4169-9166-89D0B3CBFC5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA04B6C5-156C-4169-9166-89D0B3CBFC5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA04B6C5-156C-4169-9166-89D0B3CBFC5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA04B6C5-156C-4169-9166-89D0B3CBFC5E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {35E0FA3E-D14D-44B3-9CD6-8A187AFA44A2}
 	EndGlobalSection
 EndGlobal
