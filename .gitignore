@@ -7,6 +7,10 @@
 packages/
 TestResults/
 
+#publish
+*.pubxml
+PublishProfiles/
+
 # globs
 Makefile.in
 *.DS_Store
