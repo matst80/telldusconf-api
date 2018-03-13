@@ -27,6 +27,7 @@ namespace telldusconf.Controllers
             return c;
         }
 
+        [SwaggerOperation("GetConfigFile")]
         [Produces("text/plain")]
         [HttpGet("Raw")]
         public string GetConfigFile()
