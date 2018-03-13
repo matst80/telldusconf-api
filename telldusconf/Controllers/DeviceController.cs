@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using telldusconf.Models;
 using telldusconf.Parsing;
 
@@ -9,7 +10,8 @@ namespace telldusconf.Controllers
     [Route("api/Device")]
     public class DeviceController : Controller
     {
-        [HttpGet]
+        [SwaggerOperation("GetAllDevices")]
+        [HttpGet(Name = "GetStores")]
         public IActionResult GetAllDevices()
         {
             var c = GetConfig();
@@ -29,6 +31,7 @@ namespace telldusconf.Controllers
             p.Write(c);
         }
 
+        [SwaggerOperation("GetDeviceByName")]
         [HttpGet("{Name}")]
         public IActionResult GetDeviceByName(string Name)
         {
@@ -44,6 +47,7 @@ namespace telldusconf.Controllers
             return Ok("Device not found. Did you mean to search by Id api/Device/Id/{id}");
         }
 
+        [SwaggerOperation("GetDeviceById")]
         [HttpGet("Id/{Id}")]
         public IActionResult GetDeviceById(int Id)
         {
@@ -59,6 +63,7 @@ namespace telldusconf.Controllers
             return Ok("Device not found. Did you mean to search by Name api/Device/{Name}");
         }
 
+        [SwaggerOperation("AddDevice")]
         [HttpPost]
         public IActionResult AddDevice([FromBody] Device device)
         {
