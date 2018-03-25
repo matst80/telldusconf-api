@@ -1,30 +1,22 @@
-﻿using System;
-
-namespace telldusconf.Models
+﻿namespace Telldusconf.Models
 {
+    using System;
+
     public class KeyAttribute : Attribute
     {
-        private string _key;
-
-        public string Key { get { return _key; } }
+        private string key;
 
         public KeyAttribute(string key)
         {
-            _key = key;
+            this.key = key;
         }
-    }
 
-    public class ObjectKeyAttribute : KeyAttribute
-    {
-        public ObjectKeyAttribute(string key) : base(key)
+        public string Key
         {
-        }
-    }
-
-    public class ListKeyAttribute : KeyAttribute
-    {
-        public ListKeyAttribute(string key) : base(key)
-        {
+            get
+            {
+                return this.key;
+            }
         }
     }
 }

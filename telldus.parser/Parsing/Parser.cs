@@ -1,25 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using telldusconf.Models;
-
-namespace telldusconf.Parsing
+﻿namespace Telldusconf.Parsing
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+    using Telldusconf.Models;
+
     public class Parser
     {
-        private string _filePath;
+        private string filePath;
 
         public Parser(string filename)
         {
-            _filePath = filename;
+            this.filePath = filename;
         }
 
         public ConfigFile Parse()
         {
-            var fileStream = new FileStream(_filePath, FileMode.Open);
-            return Parse(fileStream);
+            var fileStream = new FileStream(this.filePath, FileMode.Open);
+            return this.Parse(fileStream);
         }
 
         public ConfigFile Parse(FileStream fileStream)
@@ -27,15 +27,29 @@ namespace telldusconf.Parsing
             var ret = new ConfigFile();
             using (StreamReader reader = new StreamReader(fileStream))
             {
-                ret = ParseObject(typeof(ConfigFile), reader) as ConfigFile;
+                ret = this.ParseObject(typeof(ConfigFile), reader) as ConfigFile;
             }
+
             return ret;
+        }
+        
+        internal static Dictionary<string, PropertyInfo> GetProperties(PropertyInfo[] prps)
+        {
+            var keyDict = new Dictionary<string, PropertyInfo>();
+            foreach (var prp in prps)
+            {
+                var key = prp.GetCustomAttributes(true).OfType<KeyAttribute>().FirstOrDefault();
+                if (key != null)
+                {
+                    keyDict.Add(key.Key, prp);
+                }
+            }
+
+            return keyDict;
         }
 
         private object ParseObject(Type type, StreamReader reader)
         {
-
-            //var type = typeof(T);
             var ret = Activator.CreateInstance(type);
             var keyDict = GetProperties(type.GetProperties());
             bool ok = true;
@@ -54,10 +68,10 @@ namespace telldusconf.Parsing
                     {
                         var prp = keyDict[key];
                         var val = kv[1];
-                        PopulateValue(ret, prp, reader, val);
+                        this.PopulateValue(ret, prp, reader, val);
                     }
-                    var value = kv[1];
 
+                    var value = kv[1];
                 }
                 else if (line.Contains('{'))
                 {
@@ -65,26 +79,12 @@ namespace telldusconf.Parsing
                     if (keyDict.ContainsKey(key))
                     {
                         var prp = keyDict[key];
-                        PopulateValue(ret, prp, reader);
+                        this.PopulateValue(ret, prp, reader);
                     }
                 }
             }
+
             return ret;
-        }
-
-        internal static Dictionary<string, PropertyInfo> GetProperties(PropertyInfo[] prps)
-        {
-            var keyDict = new Dictionary<string, PropertyInfo>();
-            foreach (var prp in prps)
-            {
-                var key = prp.GetCustomAttributes(true).OfType<KeyAttribute>().FirstOrDefault();
-                if (key != null)
-                {
-                    keyDict.Add(key.Key, prp);
-                }
-            }
-
-            return keyDict;
         }
 
         private void PopulateValue<T>(T ret, PropertyInfo prp, StreamReader reader, string val = "")
@@ -93,7 +93,7 @@ namespace telldusconf.Parsing
             {
                 if (!string.IsNullOrEmpty(val))
                 {
-                    prp.SetValue(ret, val.Trim().Replace("\"", ""));
+                    prp.SetValue(ret, val.Trim().Replace("\"", string.Empty));
                 }
             }
             else if (prp.PropertyType == typeof(int))
@@ -104,19 +104,24 @@ namespace telldusconf.Parsing
             {
                 var obj = prp.GetValue(ret);
                 if (obj == null)
+                {
                     obj = Activator.CreateInstance(prp.PropertyType);
+                }
+
                 if (obj is System.Collections.IList lst)
                 {
                     var rowType = obj.GetType().GenericTypeArguments.FirstOrDefault();
                     if (rowType != null)
                     {
-                        var newRow = ParseObject(rowType, reader);
+                        var newRow = this.ParseObject(rowType, reader);
                         lst.Add(newRow);
                     }
                 }
-                else {
-                    obj = ParseObject(prp.PropertyType, reader);
+                else
+                {
+                    obj = this.ParseObject(prp.PropertyType, reader);
                 }
+
                 prp.SetValue(ret, obj);
             }
         }

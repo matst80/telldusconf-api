@@ -1,4 +1,4 @@
-﻿namespace telldusconf.Models
+﻿namespace Telldusconf.Models
 {
     public class TelldusController
     {
@@ -9,7 +9,6 @@
         public int Type { get; set; }
 
         [Key("serial")]
-        public string Serial { get; set; }
-       
+        public string Serial { get; set; }  
     }
 }

@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using telldusconf.Models;
-using telldusconf.Parsing;
-
-namespace telldusconf.Controllers
+﻿namespace Telldusconf.Controllers
 {
-
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Net.Http;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
+    using Swashbuckle.AspNetCore.SwaggerGen;
+    using Telldusconf.Models;
+    using Telldusconf.Parsing;
 
     [Route("api/Config")]
     public class ConfigController : Controller
@@ -20,7 +18,7 @@ namespace telldusconf.Controllers
         [SwaggerOperation("GetConfig")]
         [HttpGet]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(ConfigFile),200)]
+        [ProducesResponseType(typeof(ConfigFile), 200)]
         public ConfigFile GetConfig()
         {
             var c = ParseConfig();
@@ -40,10 +38,23 @@ namespace telldusconf.Controllers
                 {
                     data = reader.ReadToEnd();
                 }
-
             }
 
             return data;
+        }
+
+        [SwaggerOperation("StoreConfig")]
+        [HttpPost]
+        public IActionResult StoreConfigFunc([FromBody] ConfigFile config)
+        {
+            if (config != null)
+            {
+                StoreConfig(config);
+
+                return this.Ok(string.Format("Config for user {0} added", config.User));
+            }
+
+            return this.NotFound();
         }
 
         private static ConfigFile ParseConfig()
@@ -56,19 +67,6 @@ namespace telldusconf.Controllers
         {
             var p = new ConfigWriter("./telldus.conf");
             p.Write(c);
-        }
-
-        [SwaggerOperation("StoreConfig")]
-        [HttpPost]
-        public IActionResult StoreConfigFunc([FromBody] ConfigFile config)
-        {
-            if (config != null)
-            {
-                StoreConfig(config);
-
-                return Ok(string.Format("Config for user {0} added", config.User));
-            }
-            return NotFound();
         }
     }
 }

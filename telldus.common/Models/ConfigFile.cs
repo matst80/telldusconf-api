@@ -1,10 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace telldusconf.Models
+﻿// ConfigFile.cs
+namespace Telldusconf.Models
 {
+    using System;
+    using System.Collections.Generic;
+
     public class ConfigFile
     {
+        public ConfigFile()
+        {
+        }
+
         [Key("user")]
         public string User { get; set; }
 
@@ -13,9 +18,5 @@ namespace telldusconf.Models
 
         [Key("controller")]
         public TelldusController Controller { get; set; }
-
-        public ConfigFile()
-        {
-        }
     }
 }
