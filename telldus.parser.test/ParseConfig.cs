@@ -1,10 +1,10 @@
-using FluentAssertions;
-using System;
-using telldusconf.Parsing;
-using Xunit;
-
-namespace telldus.parser.test
+namespace Telldus.Parser.Test
 {
+    using System;
+    using FluentAssertions;
+    using Telldusconf.Parsing;
+    using Xunit;
+
     public class ParseConfig
     {
         [Fact]
@@ -21,7 +21,6 @@ namespace telldus.parser.test
         {
             var p = new Parser("ConfigFilesForTest/telldus.conf");
             var config = p.Parse();
-
 
             var device = config.Devices[0];
             Assert.True(device.Parameters != null);

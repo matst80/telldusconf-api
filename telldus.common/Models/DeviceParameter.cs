@@ -1,4 +1,4 @@
-﻿namespace telldusconf.Models
+﻿namespace Telldusconf.Models
 {
     public class DeviceParameter
     {

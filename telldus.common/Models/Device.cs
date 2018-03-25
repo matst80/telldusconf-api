@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace telldusconf.Models
+﻿namespace Telldusconf.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     public class Device
     {
         [Key("id")]
@@ -24,6 +24,5 @@ namespace telldusconf.Models
 
         [Key("parameters")]
         public DeviceParameter Parameters { get; set; }
-
     }
 }

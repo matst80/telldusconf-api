@@ -1,14 +1,13 @@
-﻿using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using telldusconf.Parsing;
-
-namespace telldusconf
+﻿namespace Telldusconf
 {
+    using Microsoft.AspNetCore;
+    using Microsoft.AspNetCore.Hosting;
+    using Telldusconf.Parsing;
+
     public class Program
     {
         public static void Main(string[] args)
-        {
-           
+        {  
             BuildWebHost(args).Run();
         }
 

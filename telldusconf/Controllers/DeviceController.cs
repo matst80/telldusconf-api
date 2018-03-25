@@ -1,11 +1,11 @@
-﻿using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using telldusconf.Models;
-using telldusconf.Parsing;
-
-namespace telldusconf.Controllers
+﻿namespace Telldusconf.Controllers
 {
+    using System.Linq;
+    using Microsoft.AspNetCore.Mvc;
+    using Swashbuckle.AspNetCore.SwaggerGen;
+    using Telldusconf.Models;
+    using Telldusconf.Parsing;
+
     [Produces("application/json")]
     [Route("api/Device")]
     public class DeviceController : Controller
@@ -16,9 +16,68 @@ namespace telldusconf.Controllers
         {
             var c = GetConfig();
 
-            return Ok(c.Devices);
+            return this.Ok(c.Devices);
         }
 
+        [SwaggerOperation("GetDeviceByName")]
+        [HttpGet("{Name}")]
+        public IActionResult GetDeviceByName(string name)
+        {
+            var c = GetConfig();
+
+            var devices = c.Devices.Where(d => d.Name == name);
+
+            if (devices.Count() > 0)
+            {
+                return this.Ok(devices);
+            }
+
+            return this.Ok("Device not found. Did you mean to search by Id api/Device/Id/{id}");
+        }
+
+        [SwaggerOperation("GetDeviceById")]
+        [HttpGet("Id/{id}")]
+        public IActionResult GetDeviceById(int id)
+        {
+            var c = GetConfig();
+
+            var devices = c.Devices.Where(d => d.Id == id);
+
+            if (devices.Count() > 0)
+            {
+                return this.Ok(devices);
+            }
+
+            return this.Ok("Device not found. Did you mean to search by Name api/Device/{Name}");
+        }
+
+        [SwaggerOperation("AddDevice")]
+        [HttpPost]
+        public IActionResult AddDevice([FromBody] Device device)
+        {
+            if (device != null &&
+                this.IsNotNullOrEmpty(device.Name) &&
+                this.IsNotNullOrEmpty(device.Protocol) &&
+                this.IsNotNullOrEmpty(device.Model))
+            {
+                var c = GetConfig();
+
+                if (c.Devices.Any(d => d.Id == device.Id))
+                {
+                    return this.BadRequest("Id already exists");
+                }
+
+                if (c.Devices.Any(d => d.Name == device.Name))
+                {
+                    return this.BadRequest("Name already exists");
+                }
+
+                c.Devices.Add(device);
+            }
+
+            return this.Ok(string.Format("Device {0} added", device.Name));
+        }
+        
         private static ConfigFile GetConfig()
         {
             var p = new Parser("./telldus.conf");
@@ -27,72 +86,11 @@ namespace telldusconf.Controllers
 
         private static void StoreConfig(ConfigFile c)
         {
-            var p = new ConfigWriter("./telldus-new.conf");
+            var p = new ConfigWriter("./telldus.conf");
             p.Write(c);
         }
 
-        [SwaggerOperation("GetDeviceByName")]
-        [HttpGet("{Name}")]
-        public IActionResult GetDeviceByName(string Name)
-        {
-            var c = GetConfig();
-
-            var devices = c.Devices.Where(d => d.Name == Name);
-
-            if (devices.Count() > 0)
-            {
-                return Ok(devices);
-            }
-
-            return Ok("Device not found. Did you mean to search by Id api/Device/Id/{id}");
-        }
-
-        [SwaggerOperation("GetDeviceById")]
-        [HttpGet("Id/{Id}")]
-        public IActionResult GetDeviceById(int Id)
-        {
-            var c = GetConfig();
-
-            var devices = c.Devices.Where(d => d.Id == Id);
-
-            if (devices.Count() > 0)
-            {
-                return Ok(devices);
-            }
-
-            return Ok("Device not found. Did you mean to search by Name api/Device/{Name}");
-        }
-
-        [SwaggerOperation("AddDevice")]
-        [HttpPost]
-        public IActionResult AddDevice([FromBody] Device device)
-        {
-            if (device != null &&
-                IsNotNullOrEmpty(device.Name) &&
-                IsNotNullOrEmpty(device.Protocol) &&
-                IsNotNullOrEmpty(device.Model))
-            {
-                var c = GetConfig();
-
-                if (c.Devices.Any(d => d.Id == device.Id))
-                {
-                    return BadRequest("Id already exists");
-
-                }
-                if (c.Devices.Any(d => d.Name == device.Name))
-                {
-                    return BadRequest("Name already exists");
-                }
-
-                c.Devices.Add(device);
-            }
-
-            return Ok(string.Format("Device {0} added", device.Name));
-
-        }
-
-
-        //Replace with string extension
+        // Replace with string extension
         private bool IsNotNullOrEmpty(string str)
         {
             return !string.IsNullOrEmpty(str);

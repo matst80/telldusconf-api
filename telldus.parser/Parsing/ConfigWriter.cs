@@ -1,23 +1,24 @@
-﻿using System;
-using System.Collections;
-using System.IO;
-using telldusconf.Parsing;
-
-namespace telldusconf.Parsing
+﻿namespace Telldusconf.Parsing
 {
+    using System;
+    using System.Collections;
+    using System.IO;
+    using Telldusconf.Parsing;
+
     public class ConfigWriter
     {
-        private string _filename;
+        private string filename;
 
-        public ConfigWriter(string filename) {
-            _filename = filename;
+        public ConfigWriter(string filename)
+        {
+            this.filename = filename;
         }
 
         public void Write(object data)
         {
-            using (var logWriter = File.CreateText(_filename))
+            using (var logWriter = File.CreateText(this.filename))
             {
-                Write(data, logWriter);
+                this.Write(data, logWriter);
                 logWriter.Flush();
             }
         }
@@ -39,17 +40,19 @@ namespace telldusconf.Parsing
                 }
                 else if (toWrite is IList lst)
                 {
-                    foreach(var obj in lst) {
+                    foreach (var obj in lst)
+                    {
                         writer.Write($"{prefix}{kv.Key} {{{Environment.NewLine}");
-                        Write(obj, writer, prefix + "  ");
+                        this.Write(obj, writer, prefix + "  ");
                         writer.Write($"{prefix}}}{Environment.NewLine}");
                     }
                 }
-                else {
+                else
+                {
                     if (toWrite != null)
                     {
                         writer.Write($"{prefix}{kv.Key} {{{Environment.NewLine}");
-                        Write(toWrite, writer, prefix + "  ");
+                        this.Write(toWrite, writer, prefix + "  ");
                         writer.Write($"{prefix}}}{Environment.NewLine}");
                     }
                 }
