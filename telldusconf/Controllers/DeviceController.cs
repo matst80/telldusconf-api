@@ -73,6 +73,7 @@
                 }
 
                 c.Devices.Add(device);
+                StoreConfig(c);
             }
 
             return this.Ok(device);
@@ -96,6 +97,8 @@
                     c.Devices.Remove(deviceToUpdate);
                     c.Devices.Add(device);
                 }
+
+                StoreConfig(c);
             }
 
             return this.Ok(device);
