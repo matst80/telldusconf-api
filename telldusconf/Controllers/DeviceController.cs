@@ -75,9 +75,32 @@
                 c.Devices.Add(device);
             }
 
-            return this.Ok(string.Format("Device {0} added", device.Name));
+            return this.Ok(device);
         }
-        
+
+        [SwaggerOperation("UpdateDevice")]
+        [HttpPut]
+        public IActionResult UpdateDevice([FromBody] Device device)
+        {
+            if (device != null &&
+                this.IsNotNullOrEmpty(device.Name) &&
+                this.IsNotNullOrEmpty(device.Protocol) &&
+                this.IsNotNullOrEmpty(device.Model))
+            {
+                var c = GetConfig();
+
+                var deviceToUpdate = c.Devices.FirstOrDefault(d => d.Id == device.Id);
+
+                if (deviceToUpdate != null)
+                {
+                    c.Devices.Remove(deviceToUpdate);
+                    c.Devices.Add(device);
+                }
+            }
+
+            return this.Ok(device);
+        }
+
         private static ConfigFile GetConfig()
         {
             var p = new Parser("./telldus.conf");
