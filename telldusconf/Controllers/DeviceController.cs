@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using telldusconf.Models;
@@ -12,11 +14,10 @@ namespace telldusconf.Controllers
     {
         [SwaggerOperation("GetAllDevices")]
         [HttpGet(Name = "GetStores")]
-        public IActionResult GetAllDevices()
+        public List<Device> GetAllDevices()
         {
             var c = GetConfig();
-
-            return Ok(c.Devices);
+            return c.Devices;
         }
 
         private static ConfigFile GetConfig()
@@ -33,7 +34,7 @@ namespace telldusconf.Controllers
 
         [SwaggerOperation("GetDeviceByName")]
         [HttpGet("{Name}")]
-        public IActionResult GetDeviceByName(string Name)
+        public List<Device> GetDeviceByName(string Name)
         {
             var c = GetConfig();
 
@@ -41,26 +42,21 @@ namespace telldusconf.Controllers
 
             if (devices.Count() > 0)
             {
-                return Ok(devices);
+                return devices.ToList();
             }
 
-            return Ok("Device not found. Did you mean to search by Id api/Device/Id/{id}");
+            throw new Exception("No device found");
         }
 
         [SwaggerOperation("GetDeviceById")]
         [HttpGet("Id/{Id}")]
-        public IActionResult GetDeviceById(int Id)
+        public Device GetDeviceById(int Id)
         {
             var c = GetConfig();
 
-            var devices = c.Devices.Where(d => d.Id == Id);
+            var device = c.Devices.FirstOrDefault(d => d.Id == Id);
+            return device;
 
-            if (devices.Count() > 0)
-            {
-                return Ok(devices);
-            }
-
-            return Ok("Device not found. Did you mean to search by Name api/Device/{Name}");
         }
 
         [SwaggerOperation("AddDevice")]
